@@ -24,9 +24,18 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push
+        name: Build and push searchseco/controller:${{ github.ref_name }}
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
           tags: searchseco/controller:${{ github.ref_name }}
+      -
+        if: github.ref_name == 'master'
+        name: Build and push searchseco/controller:latest
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: searchseco/controller:latest
+      
